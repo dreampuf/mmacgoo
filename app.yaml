@@ -1,0 +1,14 @@
+application: mmacgoo
+version: 5
+runtime: python
+api_version: 1
+
+inbound_services:
+- mail
+
+builtins:
+- datastore_admin: on
+
+handlers:
+- url: .*
+  script: main.py

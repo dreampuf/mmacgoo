@@ -1,0 +1,4 @@
+cron:
+- description: BXD
+  url: /u115/process
+  schedule: every 3 minutes
