@@ -19,7 +19,7 @@ class Greeting(db.Model):
 
 class MainPage(webapp.RequestHandler):
   def get(self):
-    self.response.out.write('<html><body>')
+    self.response.out.write('<html><title>Hello</title><body>')
 
     greetings = db.GqlQuery("SELECT * "
                             "FROM Greeting "
