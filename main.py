@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-#coding=utf-8
-import cgi
+# -*- coding: utf-8 -*-
+import cgi, sys
 import datetime
 import wsgiref.handlers
 
@@ -8,7 +8,8 @@ from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.ext import webapp
 
-
+reload(sys)
+sys.setdefaultencoding("utf-8")
 import U115
 import Mail
 
@@ -107,10 +108,19 @@ class TaskTest(webapp.RequestHandler):
         else:
             memcache.incr("t")
 
+class PyV(webapp.RequestHandler):
+    def get(self):
+        import PyV8
+        ctxt = PyV8.JSEngine()
+        ctxt.enter()
+        r = ctxt.eval("1+2")
+        self.request.out.write(r)
+
 application = webapp.WSGIApplication([
   ('/', MainPage),
   ('/sign', Guestbook),
   ('/ss', My),
+  ('/v', PyV),
   ('/mail', Mail.MailSender),
   ('/mail/view', Mail.MailControl),
   ('/u115', U115.U115),

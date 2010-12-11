@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import logging
 import xml.sax.saxutils as saxutils
 
@@ -81,12 +83,12 @@ class MailSender(Base.BaseWebRequest):
     def get(self):
         out = self.response.out
         
-        out.write(u"""<form method="POST"> 
-        <label for="from">从</lable><input type="text" name="from" value="xxx" />@mmacgoo.appspotmail.com<br /> 
-        <label for="to">发送到</lable><input type="text" name="to" /><br /> 
-        <label for="title">标题</lable><input type="text" name="title" /><br /> 
-        <label for="content">内容</lable><textarea style="margin-left: 2px; margin-right: 2px; width: 556px; " rows="10" name="content" ></textarea><br /> 
-        <input type="submit" value="提交" /> 
+        out.write(u"""<form method="POST">
+        <label for="from">从</lable><input type="text" name="from" value="xxx" />@mmacgoo.appspotmail.com<br />
+        <label for="to">发送到</lable><input type="text" name="to" /><br />
+        <label for="title">标题</lable><input type="text" name="title" /><br />
+        <label for="content">内容</lable><textarea style="margin-left: 2px; margin-right: 2px; width: 556px; " rows="10" name="content" ></textarea><br />
+        <input type="submit" value="提交" />
         </form>""")
     
     def post(self):
@@ -106,4 +108,3 @@ class MailSender(Base.BaseWebRequest):
             logging.info(u"发送邮件错误.%s到%s.标题:%s" % (fr, to, title))
         
         self.redirect("")
-    
