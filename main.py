@@ -116,8 +116,9 @@ application = webapp.WSGIApplication([
   ('/u115', U115.U115),
   ('/u115/user', U115.U115UserControl),
   ('/u115/log', U115.U115LogDetail),
-  ('/u115/process', U115.U115Process)
-] + [Mail.MailReceive.mapping()], debug=True)
+  ('/u115/process', U115.U115Process),
+  Mail.MailReceive.mapping()
+], debug=True)
 
 
 def main():

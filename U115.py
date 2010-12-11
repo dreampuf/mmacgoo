@@ -76,6 +76,7 @@ class U115Log(Model.BaseModel):
     time = db.DateTimeProperty(auto_now_add=True)
     type = db.StringProperty()
 
+    _count = None
     @classmethod
     def all(cls, limit=10, offset=0):
         query = db.Query(cls)
@@ -83,8 +84,10 @@ class U115Log(Model.BaseModel):
         return query.fetch(limit, offset)
 
     @classmethod
-    def count(cls, offset=0):
-        return db.Query(cls).fetch(100, offset).count(100)
+    def count(cls):
+        if cls._count == None:
+            cls._count = db.Query(cls).count(None)
+        return cls._count
 
 ### Model Area End ###
 
@@ -329,8 +332,10 @@ class U115LogDetail(Base.BaseWebRequest):
     def get(self):
         out = self.response.out
         limit = int(self.request.get("limit", "10"))
-        offset = int(self.request.get("offset", "0"))
-        list = U115Log.all(limit, offset)
+        p = int(self.request.get("p", "1"))
+        p = 1 if p == 0 else p
+        list = U115Log.all(limit, p)
+        total = U115Log.count()
 
         out.write(u"""
         <table><tr><td>来自</td><td>时间</td><td>类型</td><td>内容</td></tr><tbody>
@@ -341,9 +346,9 @@ class U115LogDetail(Base.BaseWebRequest):
         out.write("""
         </tbody></table><br />
         """)
-
-        prehref = (offset > 10 and U115Log.count(offset - 10) > 0) and 'href="?limit=10&offset=%s"' % (offset - 10) or ''
-        nexthref = (len(list) > 10 and U115Log.count(offset + 10) > 0) and 'href="?limit=10&offset=%s"' % (offset + 10) or ''
+        out.write("%s<br />"%total)
+        prehref = 'href="?limit=%s&p=%s"' % (limit, p-1) if p > 1 else ''
+        nexthref = 'href="?limit=%s&p=%s"' % (limit, p+1) if p*limit < total else ''
         out.write("""
         <a %s>pre</a>|<a %s>next</a>
         """ % (prehref, nexthref))
