@@ -110,11 +110,30 @@ class TaskTest(webapp.RequestHandler):
 
 class PyV(webapp.RequestHandler):
     def get(self):
-        import PyV8
-        ctxt = PyV8.JSEngine()
-        ctxt.enter()
-        r = ctxt.eval("1+2")
-        self.request.out.write(r)
+        def out(str):
+            self.response.out.write("%s%s"%(str, "<br />"))
+        ZERO_TIME_DELTA = datetime.timedelta(0)
+        class LocalTimezone(datetime.tzinfo):
+            def utcoffset(self, dt):
+                return datetime.timedelta(hours=8)
+
+            def dst(self, dt):
+                return ZERO_TIME_DELTA
+
+        class UTC(datetime.tzinfo):
+            def utcoffset(self, dt):
+                return ZERO_TIME_DELTA
+
+            def dst(self, dt):
+                return ZERO_TIME_DELTA
+        a = datetime.datetime.now()
+        out("%s"%a)
+        a = a.replace(tzinfo=UTC())
+        out(a)
+        out("%s" % a.astimezone(LocalTimezone()))
+
+        b = datetime.datetime.strptime("2010/12/15 15:22:47", "%Y/%m/%d %H:%M:%S")
+        b = b.replace(tzinfo=LocalTimezone())
 
 application = webapp.WSGIApplication([
   ('/', MainPage),

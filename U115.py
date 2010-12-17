@@ -224,12 +224,13 @@ class U115Process(Base.BaseWebRequest):
             ccookie = uc[cur.username]
             hp.set_cookie(ccookie)
             response = hp.open(url="http://u.115.com/?ac=my")
-            upfileKey = re.findall("setPostParams\({aid:a.aid,cid:a.cid,cookie:\"(.+?)\"}\)", response.content)
+            upfileKey = re.findall("var USER_COOKIE = '(.+?)';", response.content)
 
             if len(upfileKey) > 0:
                 upfileKey = upfileKey[0]
             else:
                 upfileKey = ""
+                logging.info("上传Cookie出错!请修改正则")
                 return
 
             fileds = {"Filename" : "Filename",
@@ -280,17 +281,30 @@ class U115Process(Base.BaseWebRequest):
                 log.put()
             return
 
+        elif action == "renewfile": #刷新临时文件夹
+            ukey = self.request.get("u")
+            cur = U115User.get(ukey)
+            if cur != None:
+                hp.set_cookie(uc[cur.username])
+                response = hp.open("http://u.115.com/?ct=ajax&ac=renew_file&aid=0&cid=0&is_batch=1")
+                result = json.read(response.content)
+                if result.has_key("state") and result["state"]:
+                    logging.info("用户%s已经更新了临时文件夹"%cur.username)
+
+            return
         elif action == "login" : #Login
             ukey = self.request.get("u")
             cur = U115User.get(ukey)
 
             postdata = {
                 "login[account]" : cur.username,
-                "login[passwd]" : cur.password
+                "login[passwd]" : cur.password,
+                "login[time]" : "no"
             }
-            response = hp.open(url="http://my.115.com/?action=login&goto=http%3A%2F%2Fu.115.com%2F%3Fac%3Dmy",
+            response = hp.open(url="http://passport.115.com/?action=login&goto=http%3A%2F%2Fu.115.com%2F%3Fac%3Dmy",
                                        method=Util.HttpHelper.POST,
                                        postdata=postdata)
+            logging.info(response.content)
             if response.content.find("用户名不存在或密码输入错误") != -1:
                 log = U115Log()
                 log.by = cur.key()
@@ -308,8 +322,8 @@ class U115Process(Base.BaseWebRequest):
             #用户登录
             taskqueue.add(url="/u115/process?action=login&u=%s" % cur.key(), method="GET")
             diff = cur.lastopt + datetime.timedelta(hours=4)  < datetime.datetime.utcnow()
-            if diff:
-            #if True:
+            #if diff:
+            if True:
                 cur.lastopt = datetime.datetime.utcnow()
                 cur.put()
                 Base.Cache.delete("U115UserList")
@@ -319,12 +333,10 @@ class U115Process(Base.BaseWebRequest):
                 #上传文件
                 taskqueue.add(url="/u115/process?action=upfile&u=%s" % cur.key(), method="GET")
 
+                #更新临时文件夹
+                taskqueue.add(url="/u115/process?action=renewfile&u=%s" % cur.key(), method="GET")
+
             #FOR END
-
-
-
-
-
 
 
 
@@ -342,7 +354,7 @@ class U115LogDetail(Base.BaseWebRequest):
         """)
         for i in list:
             out.write(u"""<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>""" %
-                      (i.by.username, i.time, i.type, i.content))
+                      (i.by.username, Base.UTCtoLocal(i.time), i.type, i.content))
         out.write("""
         </tbody></table><br />
         """)

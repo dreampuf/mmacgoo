@@ -3,8 +3,8 @@
   <component name="FacetManager">
     <facet type="google-appengine-python" name="Google App Engine">
       <configuration>
-        <option name="rootFolder" value="E:\dreampuf\mmacgoo" />
-        <option name="sdkFolder" value="C:\Program Files\Google\google_appengine" />
+        <option name="rootFolder" value="R:\Sites\mmacgoo" />
+        <option name="sdkFolder" value="R:\Sites\Google\google_appengine" />
         <option name="templatesFolder" value="" />
         <option name="email" value="soddyque@gmail.com" />
         <option name="gp" value="df9bdf93df92df93df9bdf9adf98df9d" />

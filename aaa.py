@@ -16,8 +16,6 @@ import string, re
 def baseN(num,b):
   return ((num == 0) and  "0" ) or ( baseN(num // b, b).lstrip("0") + "0123456789abcdefghijklmnopqrstuvwxyz"[num % b])
 def unpacked(p, a, c, k, e, d):
-    
-    #k.append('')
     def e(c):
         t = c%a
         return ("" if c < a else e(int(c/a))) + (chr(c+29) if t>35 else baseN(c, 36))
@@ -27,11 +25,34 @@ def unpacked(p, a, c, k, e, d):
             c = c-1
         c = 1
     r = re.compile('\\b\d\\b')
-    for match in r.finditer(p):
-        print "%s:%s" %(match.start(), match.end())
-        p = p[0:match.start()] + d[match.group()] + p[match.end():]
-
+    return r.sub(lambda x: d[x.group()], p)
     return p
 
-c = unpacked('2.4("3://5.0.1")',62,6,'baidu|com|document|http|write|www'.split('|'),0,{})
-print c
+#match = re.match("eval\(function\(p,a,c,k,e,d\).+return p;}\((.+?)\)\)", val)
+#c = unpacked(match.group())
+#print c
+#print unpacked(*eval(match.group(1)))
+
+import datetime
+
+ZERO_TIME_DELTA = datetime.timedelta(0)
+class LocalTimezone(datetime.tzinfo):
+    def utcoffset(self, dt):
+        return datetime.timedelta(hours=8)
+
+    def dst(self, dt):
+        return ZERO_TIME_DELTA
+
+class UTC(datetime.tzinfo):
+    def utcoffset(self, dt):
+        return ZERO_TIME_DELTA
+
+    def dst(self, dt):
+        return ZERO_TIME_DELTA
+
+a = datetime.datetime.now().replace(tzinfo=UTC()).astimezone(LocalTimezone())
+print a
+
+b = datetime.datetime.strptime("2010/12/15 16:22:47", "%Y/%m/%d %H:%M:%S").replace(tzinfo=LocalTimezone()).astimezone(UTC())
+#b = b.replace(tzinfo=LocalTimezone())
+print b
