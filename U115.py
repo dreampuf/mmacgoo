@@ -322,8 +322,8 @@ class U115Process(Base.BaseWebRequest):
             #用户登录
             taskqueue.add(url="/u115/process?action=login&u=%s" % cur.key(), method="GET")
             diff = cur.lastopt + datetime.timedelta(hours=4)  < datetime.datetime.utcnow()
-            #if diff:
-            if True:
+            if diff:
+            #if True:
                 cur.lastopt = datetime.datetime.utcnow()
                 cur.put()
                 Base.Cache.delete("U115UserList")

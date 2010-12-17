@@ -36,7 +36,7 @@
       <file leaf-file-name="U115.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/U115.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="289" column="0" selection-start="9960" selection-end="9960" vertical-scroll-proportion="0.07049608">
+            <state line="303" column="61" selection-start="10514" selection-end="10514" vertical-scroll-proportion="-0.09921671">
               <folding />
             </state>
           </provider>
@@ -111,6 +111,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Favorites" />
       <pane id="Scope">
         <subPane subId="All">
           <PATH>
@@ -129,7 +130,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -144,10 +144,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="com.jetbrains.appengine.AppEngineConfigurable" />
-    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="recentsLimit" value="5" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager" selected="App Engine server.mmacgoo">
     <configuration default="false" name="aaa" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -364,30 +364,11 @@
         <state line="27" column="69" selection-start="895" selection-end="895" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="45" selection-start="853" selection-end="853" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/json.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-10.207865">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="40" selection-start="740" selection-end="740" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mail.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="18" selection-start="229" selection-end="229" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Util.py">
@@ -404,9 +385,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="45" selection-start="853" selection-end="853" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="40" selection-start="740" selection-end="740" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Mail.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="18" selection-start="229" selection-end="229" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/U115.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="289" column="0" selection-start="9960" selection-end="9960" vertical-scroll-proportion="0.07049608">
+        <state line="303" column="61" selection-start="10514" selection-end="10514" vertical-scroll-proportion="-0.09921671">
           <folding />
         </state>
       </provider>
